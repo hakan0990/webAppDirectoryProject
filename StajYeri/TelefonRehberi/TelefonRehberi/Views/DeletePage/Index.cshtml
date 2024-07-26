@@ -1,0 +1,75 @@
+﻿@*
+
+*@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ekranı</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="register">
+        <h2>Düzenlemelerini Yap</h2>
+        <form id="deleteForm">
+            <div class="input-group">
+                <label for="email">E-posta</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+            <button id="delete" type="submit">Sil</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#deleteForm").submit(function (event) {
+                event.preventDefault(); // Formun normal submit işlemini engelle
+
+                // Formdan kullanıcı bilgilerini al
+                var email = $("#email").val();
+
+                // JSON formatında gönderilecek veri objesini oluştur
+                var data = {
+                    email: email
+                };
+
+                // Veriyi JSON string formatına dönüştür
+                var jsonData = JSON.stringify(data);
+
+                // AJAX isteği gönder
+                $.ajax({
+                    type: "POST", // HTTP metodu POST olarak değiştirildi
+                    url: "/DeletePage/DeleteRecord",  // .NET Controller ve Action ismi
+                    contentType: "application/json; charset=utf-8",
+                    data: jsonData,
+                    success: function () {
+                        Swal.fire({
+                            title: "Başarılı!",
+                            text: "Başarıyla Silindi ",
+                            icon: "success"
+                        });
+                        window.location.href = 'LoginPage'; // Başarılı giriş durumunda yönlendirme yapabilirsiniz
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "Uyarı!",
+                            text: "Hatalı Silinecek Email Girdiniz",
+                            icon: "warning"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+

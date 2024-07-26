@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ekranı</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="login">
+        <h2>Rehber Uygulamasına Giriş Yap</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Giriş Yap</button>
+            <br />
+            
+          
+        </form>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#registerButton").click(function () {
+                window.location.href ='Register';
+            });
+
+            $("#loginForm").submit(function (event) {
+                event.preventDefault(); // Formun normal submit işlemini engelle
+
+                // Formdan kullanıcı adı ve şifreyi al
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                // JSON formatında gönderilecek veri objesini oluştur
+                var data = {
+                    LoginName: username,  // .NET tarafındaki property ismiyle eşleşmeli
+                    Password: password    // .NET tarafındaki property ismiyle eşleşmeli
+                };
+
+                // Veriyi JSON string formatına dönüştür
+                var jsonData = JSON.stringify(data);
+
+                // AJAX isteği gönder
+                $.ajax({
+                    type: "POST",
+                    url: "/HomePage/Authenticate",  // .NET Controller ve Action ismi
+                    contentType: "application/json; charset=utf-8",
+                    data: jsonData,
+                    success: function () {
+                        Swal.fire({
+                            title: "Başarılı!",
+                            text: "Giriş Başarılı",
+                            icon: "success"
+                        }).then(() => {
+                            window.location.href = 'LoginPage';
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "Uyarı!",
+                            text: "Giriş Başarısız",
+                            icon: "warning"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

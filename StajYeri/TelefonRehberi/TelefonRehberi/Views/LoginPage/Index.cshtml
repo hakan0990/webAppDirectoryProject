@@ -1,0 +1,111 @@
+﻿<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+<h1>Admin Paneline Hoşgeldiniz Tüm işlemlerinizi Dilediğinizce Buradan Halledebilirsiniz</h1>
+@*<img src="/images/243e2689-d9c0-42a1-8169-cd5316561765.jpg" />*@
+
+
+<table id="example" class="display" style="width:100%">
+	<thead>
+		<tr>
+			<button id="newAdmin" type="button" style="background-color: aqua; color: white; border: none; padding: 10px 20px;">Yeni Kullanıcı</button>
+			@* <th>IMG</th> *@
+			<th>ID</th>
+			<th>Ad</th>
+			<th>Soyad</th>
+			<th>LoginPassword</th>
+			<th>Adres</th>
+			<th>TelefonNo</th>
+			<th>Email</th>
+			<th><button id="reverse" type="button" style="background-color: orange; color: white; border: none; padding: 10px 20px;">Düzenle</button></th>
+			<th><button id="delete" type="button" style="background-color: red; color: white; border: none; padding: 10px 20px;">Sil</button></th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+	<tfoot>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	</tfoot class="pb-5">
+</table>
+<div class="modal"></div>
+<button id="btn-reload" style="display:none"></button>
+<button id="logoutButton" type="button" style="background-color:mediumblue;color:white;border:none;padding:10px 10px;">
+	Çıkış Yap
+</button>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"   />
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		var table = new DataTable("#example", {
+			ajax: {
+				url: "/LoginPage/GetAll",
+				type: "GET",
+				datatype: "json"
+			},
+			columns: [
+				// { data: "img", name: "img", searchable: true, autoWidth: true },
+				{ data: "loginID", name: "loginID", searchable: true, autoWidth: true },
+				{ data: "ad", name: "ad", searchable: true, autoWidth: true },
+				{ data: "soyad", name: "soyad", searchable: true, autoWidth: true },
+				{ data: "loginPassword", name: "loginPassword", searchable: true, autoWidth: true },
+				{ data: "adres", name: "adres", searchable: true, autoWidth: true },
+				{ data: "telefonNo", name: "telefonNo", searchable: true, autoWidth: true },
+				{ data: "email", name: "email", searchable: true, autoWidth: true },
+			]
+		});
+
+		document.getElementById('btn-reload').addEventListener('click', function () {
+			table.ajax.reload();
+		});
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$("#reverse").click(function () {
+			window.location.href = '/OrganisePage'; // Başına '/' ekleyerek route olarak belirtildi varsayalım
+		});
+	});
+
+</script>
+
+<script>
+
+	$(document).ready(function () {
+		$("#delete").click(function () {
+			window.location.href = '/DeletePage'; // Başına '/' ekleyerek route olarak belirtildi varsayalım
+		});
+	});
+</script>
+
+<script>
+	$(document).ready(function () {
+		$("#newAdmin").click(function () {
+			window.location.href = '/Register'; // Başına '/' ekleyerek route olarak belirtildi varsayalım
+		});
+	});
+
+</script>
+<script>
+	$(document).ready(function () {
+		$("#logoutButton").click(function () {
+			window.location.href = '/Home';
+		});
+	});
+
+</script>
+
+
+
+
+
+
